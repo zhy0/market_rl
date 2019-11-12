@@ -79,9 +79,9 @@ class RandomMatcher(Matcher):
         :return: the dictionary containing the the agent id as keys and the rewards as values
         """
         # update offers
-        for agent_id, offer in current_actions.items():
-            if agent_id not in matched:
-                offers.loc[offers['id'] == agent_id, ['offer', 'time']] = (offer, env_time)
+        new_offers = pd.DataFrame(current_actions.items(), columns=['id', 'offer'])
+        new_offers['time'] = env_time
+        offers.update(new_offers)
         # keep buyer and seller offers with non-matched ids sorted:
         # descending by offer value for buyers
         # ascending by offer value for sellers
